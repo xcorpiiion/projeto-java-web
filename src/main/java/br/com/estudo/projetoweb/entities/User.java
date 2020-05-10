@@ -1,16 +1,16 @@
 package br.com.estudo.projetoweb.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
+@Table(name = "Usuario")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -26,6 +26,10 @@ public class User implements Serializable {
     private String phone;
 
     private String senha;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "client")
+    private List<Oder> orders;
 
     public User() {
     }
@@ -76,6 +80,14 @@ public class User implements Serializable {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public List<Oder> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Oder> orders) {
+        this.orders = orders;
     }
 
     @Override
